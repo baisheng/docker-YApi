@@ -29,6 +29,6 @@ WORKDIR /yapi
 COPY --from=source /yapi .
 COPY start.js .
 
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["node", "./start.js"]

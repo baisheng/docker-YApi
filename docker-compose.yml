@@ -2,15 +2,23 @@ version: '3'
 
 services:
   yapi-web:
-    image: jayfong/yapi:latest
+    # image: caixie/yapi:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: yapi-web
-    ports:
-      - 40001:3000
     volumes:
       - ./config.js:/yapi/config.js
     depends_on:
       - yapi-mongo
     restart: unless-stopped
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dev-api.entrypoints=web, web-secure"
+      - "traefik.http.routers.dev-api.rule=Host(`dev-api.caixie.top`, `dev-api.picker.cc`)"
+      - "traefik.docker.network=traefik"
   yapi-mongo:
     image: mongo:latest
     container_name: yapi-mongo
@@ -19,3 +27,9 @@ services:
     expose:
       - 27017
     restart: unless-stopped
+    networks:
+      - traefik
+networks:
+  traefik:
+    external: true
+

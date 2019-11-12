@@ -4,7 +4,7 @@ const http = require('http')
 const config = require('./config.js')
 
 // 端口固定为 3000
-Object.assign(config, { port: 3000 })
+Object.assign(config, { port: 80 })
 
 const consoleInfo = []
 
